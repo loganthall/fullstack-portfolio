@@ -1,4 +1,4 @@
-![React ToDo List](public/logo192.png)
+![React ToDo List](public/banner.png)
 
 # React ToDo List
 
