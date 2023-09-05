@@ -2,15 +2,13 @@ import { format } from 'date-fns';
 import { motion } from 'framer-motion';
 import toast from 'react-hot-toast';
 import React, { useEffect, useState } from 'react';
-import { MdDelete, MdEdit, MdAddTask, MdArrowCircleDown, MdArrowCircleRight } from 'react-icons/md';
+import { MdDelete, MdEdit } from 'react-icons/md';
 import { useDispatch } from 'react-redux';
 import { deleteTodo, updateTodo } from '../slices/todoSlice';
 import styles from '../styles/modules/todoItem.module.scss';
 import { getClasses } from '../utils/getClasses';
 import CheckButton from './CheckButton';
-import TodoModal from './TodoModal';
 import SubTodoModal from './SubTodoModal';
-import BreakoutArrow from './BreakoutArrow';
 
 const child = {
   hidden: { y: 20, opacity: 0 },
@@ -20,12 +18,10 @@ const child = {
   },
 };
 
-function TodoItem({ todo }) {
+function SubTodoItem({ todo }) {
   const dispatch = useDispatch();
   const [checked, setChecked] = useState(false);
   const [updateModalOpen, setUpdateModalOpen] = useState(false);
-  const [addTaskModalOpen, setAddTaskModalOpen] = useState(false);
-  const [breakoutVisible, setBreakoutVisible] = useState(false);
 
   useEffect(() => {
     if (todo.status === 'complete') {
@@ -51,19 +47,10 @@ function TodoItem({ todo }) {
     setUpdateModalOpen(true);
   };
 
-  const handleAddTask = () => {
-    setAddTaskModalOpen(true);
-  };
-
-  const handleBreakout = () => {
-    setBreakoutVisible(!breakoutVisible);
-  };
-
   return (
     <>
       <motion.div className={styles.item} variants={child}>
         <div className={styles.todoDetails}>
-          <BreakoutArrow visible={breakoutVisible} handleBreakout={handleBreakout} />
           <CheckButton checked={checked} handleCheck={handleCheck} />
           <div className={styles.texts}>
             <p
@@ -98,15 +85,6 @@ function TodoItem({ todo }) {
           >
             <MdEdit />
           </div>
-          <div
-            className={styles.icon}
-            onClick={() => handleAddTask()}
-            onKeyDown={() => handleAddTask()}
-            tabIndex={0}
-            role="button"
-          >
-            <MdAddTask />
-          </div>
         </div>
       </motion.div>
       <TodoModal
@@ -115,14 +93,8 @@ function TodoItem({ todo }) {
         setModalOpen={setUpdateModalOpen}
         todo={todo}
       />
-      <SubTodoModal
-        type="add"
-        modalOpen={addTaskModalOpen}
-        setModalOpen={setAddTaskModalOpen}
-        todo={todo}
-      />
     </>
   );
 }
 
-export default TodoItem;
+export default SubTodoItem;
