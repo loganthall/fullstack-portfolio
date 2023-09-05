@@ -11,7 +11,7 @@ const getInitialTodo = () => {
   return [];
 };
 
-const initialValue = {
+export const initialValue = {
   filterStatus: 'all',
   todoList: getInitialTodo(),
 };

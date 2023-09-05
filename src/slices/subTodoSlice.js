@@ -1,37 +1,31 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { initialValue } from './todoSlice';
 
-// const getInitialTodo = () => {
-//   // getting todo list
-//   const localTodoList = window.localStorage.getItem('todoList');
-//   // if todo list is not empty
-//   if (localTodoList) {
-//     return JSON.parse(localTodoList);
-//   }
-//   window.localStorage.setItem('todoList', []);
-//   return [];
-// };
+const getInitialSubTodo = () => {
 
-// const initialValue = {
-//   filterStatus: 'all',
-//   todoList: getInitialTodo(),
-// };
+};
+
+const initialSubValue = {
+  filterStatus: 'all',
+  todoList: getInitialSubTodo(),
+};
 
 export const subTodoSlice = createSlice({
   name: 'subTodo',
-  initialState: initialValue,
+  initialState: initialSubValue,
   reducers: {
-    addTodo: (state, action) => {
-      state.todoList.push(action.payload);
-      const todoList = window.localStorage.getItem('todoList');
-      if (todoList) {
-        const todoListArr = JSON.parse(todoList);
-        todoListArr.push({
+    addSubTodo: (state, action) => {
+      state.subTodoList.push(action.payload);
+      const subTodoList = window.localStorage.getItem('subTodoList');
+      if (subTodoList) {
+        const subTodoListArr = JSON.parse(subTodoList);
+        subTodoListArr.push({
           ...action.payload,
         });
-        window.localStorage.setItem('todoList', JSON.stringify(todoListArr));
+        window.localStorage.setItem('subTodoList', JSON.stringify(subTodoListArr));
       } else {
         window.localStorage.setItem(
-          'todoList',
+          'subTodoList',
           JSON.stringify([
             {
               ...action.payload,
@@ -40,39 +34,39 @@ export const subTodoSlice = createSlice({
         );
       }
     },
-    updateTodo: (state, action) => {
-      const todoList = window.localStorage.getItem('todoList');
+    updateSubTodo: (state, action) => {
+      const subTodoList = window.localStorage.getItem('subTodoList');
       if (todoList) {
-        const todoListArr = JSON.parse(todoList);
-        todoListArr.forEach((todo) => {
+        const subTodoListArr = JSON.parse(subTodoList);
+        subTodoListArr.forEach((todo) => {
           if (todo.id === action.payload.id) {
             todo.status = action.payload.status;
             todo.title = action.payload.title;
           }
         });
-        window.localStorage.setItem('todoList', JSON.stringify(todoListArr));
-        state.todoList = [...todoListArr];
+        window.localStorage.setItem('subTodoList', JSON.stringify(subTodoListArr));
+        state.subTodoList = [...subTodoListArr];
       }
     },
-    deleteTodo: (state, action) => {
-      const todoList = window.localStorage.getItem('todoList');
-      if (todoList) {
-        const todoListArr = JSON.parse(todoList);
-        todoListArr.forEach((todo, index) => {
+    deleteSubTodo: (state, action) => {
+      const subTodoList = window.localStorage.getItem('subTodoList');
+      if (subTodoList) {
+        const subTodoListArr = JSON.parse(subTodoList);
+        subTodoListArr.forEach((todo, index) => {
           if (todo.id === action.payload) {
-            todoListArr.splice(index, 1);
+            subTodoListArr.splice(index, 1);
           }
         });
-        window.localStorage.setItem('todoList', JSON.stringify(todoListArr));
-        state.todoList = todoListArr;
+        window.localStorage.setItem('subTodoList', JSON.stringify(subTodoListArr));
+        state.subTodoList = subTodoListArr;
       }
     },
-    updateFilterStatus: (state, action) => {
+    updateSubFilterStatus: (state, action) => {
       state.filterStatus = action.payload;
     },
   },
 });
 
-export const { addTodo, updateTodo, deleteTodo, updateFilterStatus } =
-  todoSlice.actions;
-export default todoSlice.reducer;
+export const { addSubTodo, updateSubTodo, deleteSubTodo, updateSubFilterStatus } =
+  subTodoSlice.actions;
+export default subTodoSlice.reducer;

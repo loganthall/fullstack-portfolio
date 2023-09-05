@@ -26,13 +26,27 @@ const BreakoutArrow = ({ visible, handleBreakout }) => {
         <>
             <div>
                 {visible ? (
-                    <div>
-                        <MdArrowCircleDown size={'3rem'} color={'#646681'} onClick={() => handleBreakout()} />
-                    </div>
+                    <motion.div
+                        initial={{ scale: 0 }}
+                        animate={{ rotate: 90, scale: 1 }}
+                        transition={{
+                            type: "spring",
+                            stiffness: 300,
+                            damping: 20
+                        }}>
+                        <MdArrowCircleRight size={'3rem'} color={'#646681'} onClick={() => handleBreakout()} />
+                    </motion.div>
                 ) : (
-                    <div>
+                    <motion.div
+                        initial={{ scale: 0 }}
+                        animate={{ rotate: 0, scale: 1 }}
+                        transition={{
+                            type: "spring",
+                            stiffness: 300,
+                            damping: 20
+                        }}>
                         <MdArrowCircleRight size={'3rem'} color={'#dedfe1'} onClick={() => handleBreakout()} />
-                    </div>
+                    </motion.div>
                 )}
             </div>
         </>
